@@ -14,6 +14,7 @@
 (defgroup auto-resize nil
   "A package to auto-resize emacs when moving between high/low dpi monitors"
   :group 'convenience
+  :link '(url-link "https://github.com/MatthewBregg/auto-resize-emacs")
   :version '1
   )
 
@@ -61,7 +62,7 @@
   "The size to go to for low-dpi displays" :group 'auto-resize)
 
 (defcustom auto-resize--high-size 200
-  "The size to go to for low-dpi displays" :group 'auto-resize)
+  "The size to go to for high-dpi displays" :group 'auto-resize)
 
 (defun auto-resize--resize-frame () 
   (setq auto-resize--last-saw-ppi (auto-resize--get-current-monitor-ppi))
