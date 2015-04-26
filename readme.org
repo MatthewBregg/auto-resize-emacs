@@ -1,0 +1,24 @@
+
+* What is it?
+
+Since at the moment scaling multimonitors at different dpis can be a bit troublesome, for now, sometimes one must scale per application.
+
+This will let emacs switch between a high and low dpi mode, based on what monitor it sees it is on.
+
+Works per frame also, so a frame on a low dpi monitor will not be scaled, while one on a high dpi monitor will.
+
+* Bugs
+Used the window-configuration-change-hook, which is the best hook I could find, but still limited. 
+Just moving does not rescale, need to do something to trigger the window-configuration-change-hook, like maximizing
+
+* How to install
+Place somewhere, and then
+#+BEGIN_SRC elisp
+(add-to-list 'load-path "/path/to/extension")
+(require 'auto-resize)
+#+END_SRC
+For example
+#+BEGIN_SRC elisp
+(add-to-list 'load-path "~/.emacs.d/auto-resize")
+(require 'auto-resize)
+#+END_SRC
