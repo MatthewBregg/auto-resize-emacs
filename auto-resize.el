@@ -73,7 +73,9 @@
 
 
 (defun auto-resize--resize-current-frame-if-new ()
-  (if (= auto-resize--last-saw-ppi (auto-resize--get-current-monitor-ppi))  'didnt-resize (auto-resize--resize-frame)))
+  (when (display-graphic-p)
+    (if (= auto-resize--last-saw-ppi (auto-resize--get-current-monitor-ppi))  'didnt-resize (auto-resize--resize-frame)))
+  )
 
 (defun auto-resize--mmtoinches (x)
   (/ x 25.4))
