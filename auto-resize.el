@@ -1,17 +1,16 @@
 ;;; auto-resize.el --- Auto-resize emacs!
 ;;; Version: 1.0
-;;; package  --- Summary : Auto resizes emacs based on the dpi of the current window it is in.
+;;; package  --- Summary : Auto resizes emacs based on the ppi of the current window it is in.
 ;;; Commentary: 
-;;; Autoresizes based on current dpi, using the frame attributes.
-;;; Note that as this uses the window-configuration-change-hook, it only updates when the window actually
-;;; changes, not just on dragging. This isn't ideal, but I couldn't find a better hook.
-;;; ALSO ONLY TESTED ON LINUX ATM 
+;; Autoresizes based on current ppi, using the frame attributes.
+;; Note that as this uses the window-configuration-change-hook, it only updates when the window actually
+;; changes, not just on dragging. This isn't ideal, but I couldn't find a better hook.
+;; ALSO ONLY TESTED ON LINUX ATM 
+;; Activates automatically if installed, might add a hook to turn on/off later
 
 ;;; Code:
 
-;;TODO
-					;Use dpi
-					;Fix bug where it doesn't scale if starting on high-dpi
+
 (defgroup auto-resize nil
   "A package to auto-resize emacs when moving between high/low dpi monitors"
   :group 'convenience
