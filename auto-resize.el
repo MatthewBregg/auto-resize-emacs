@@ -1,3 +1,5 @@
+;;; auto-resize.el --- Auto-resize emacs!
+;;; Version: 1.0
 ;;; package  --- Summary : Auto resizes emacs based on the dpi of the current window it is in.
 ;;; Commentary: 
 ;;; Autoresizes based on current dpi, using the frame attributes.
