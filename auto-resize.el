@@ -3,8 +3,7 @@
 ;;; package  --- Summary : Auto resizes emacs based on the ppi of the current window it is in.
 ;;; Commentary: 
 ;; Autoresizes based on current ppi, using the frame attributes.
-;; Note that as this uses the window-configuration-change-hook, it only updates when the window actually
-;; changes, not just on dragging. This isn't ideal, but I couldn't find a better hook.
+;; This now uses a timer, to consistently check every .3 seconds by default, which is customizable. 
 ;; ALSO ONLY TESTED ON LINUX ATM 
 ;; Activates automatically if installed, might add a hook to turn on/off later
 
@@ -86,9 +85,25 @@
 (defun auto-resize--mmtoinches (x)
   (/ x 25.4))
 
-(add-hook 'window-configuration-change-hook (lambda () (auto-resize--resize-current-frame-if-new)))
-
-
+;(add-hook 'window-configuration-change-hook (lambda () (auto-resize--resize-current-frame-if-new)))
+(defcustom auto-resize--resize-check-frequency .3
+  "How often to check for resize, in seconds.
+Uses 'sleep-for' to wait, subject to same restrictions as that function.")
+(defvar auto-resize--timer-value nil "Timer value, for canceling.")
+(setq auto-resize--timer-value (run-at-time "1 sec" auto-resize--resize-check-frequency 'auto-resize--resize-current-frame-if-new))
+(defun auto-resize-cancel-auto-resize-timer ()
+  "Stop the auto-resize-check."
+  (interactive)
+  (if auto-resize--timer-value (progn
+                                 (cancel-timer auto-resize--timer-value)
+                                 (setq auto-resize--timer-value nil))))
+(defun auto-resize-start-auto-resize-timer ()
+  "Start the auto-resize check if it isn't running."
+  (interactive)
+  (if auto-resize--timer-value nil (setq auto-resize--timer-value (run-at-time "1 sec" auto-resize--resize-check-frequency 'auto-resize--resize-current-frame-if-new)))
+  )
 	
-(provide 'auto-resize);;; auto-resize.el ends here...
+(provide 'auto-resize)
+;;; auto-resize.el ends here
+
 
