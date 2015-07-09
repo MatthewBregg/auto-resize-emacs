@@ -101,7 +101,7 @@ Uses 'sleep-for' to wait, subject to same restrictions as that function.")
   (interactive)
   (if auto-resize--timer-value nil (setq auto-resize--timer-value (run-at-time "1 sec" auto-resize--resize-check-frequency 'auto-resize--resize-current-frame-if-new)))
   )
-(auto-resize-start-uato-resize-timer)	
+(auto-resize-start-auto-resize-timer)	
 (provide 'auto-resize)
 ;;; auto-resize.el ends here
 
