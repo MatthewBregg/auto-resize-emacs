@@ -25,3 +25,7 @@ For example
 #+END_SRC
 * Custom Vars
 The variables auto-resize--timer-value, and auto-resize--ppi-turning-point specify how often to check, and the ppi to check for. 
+
+* Starting and stopping
+M-x : auto-resize-start-auto-resize-timer to start, if not running, else do nothing.
+M-x : auto-resize-cancel-auto-resize-timer to stop, if running, else do nothing
