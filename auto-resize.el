@@ -90,7 +90,6 @@
   "How often to check for resize, in seconds.
 Uses 'sleep-for' to wait, subject to same restrictions as that function.")
 (defvar auto-resize--timer-value nil "Timer value, for canceling.")
-(setq auto-resize--timer-value (run-at-time "1 sec" auto-resize--resize-check-frequency 'auto-resize--resize-current-frame-if-new))
 (defun auto-resize-cancel-auto-resize-timer ()
   "Stop the auto-resize-check."
   (interactive)
@@ -102,7 +101,7 @@ Uses 'sleep-for' to wait, subject to same restrictions as that function.")
   (interactive)
   (if auto-resize--timer-value nil (setq auto-resize--timer-value (run-at-time "1 sec" auto-resize--resize-check-frequency 'auto-resize--resize-current-frame-if-new)))
   )
-	
+(auto-resize-start-uato-resize-timer)	
 (provide 'auto-resize)
 ;;; auto-resize.el ends here
 
