@@ -20,9 +20,15 @@
 
 ;;How to set font : Sets font for the current fram, and only via height
 (defun auto-resize--set-font-height (size)
+  ;;Set main font
   (set-face-attribute 'default 
                       (selected-frame)
-                      :height size))
+                      :height size)
+  ;;Set modeline font
+  (set-face-attribute 'mode-line 
+                      (selected-frame)
+                      :height size)
+  )
 
 
 
