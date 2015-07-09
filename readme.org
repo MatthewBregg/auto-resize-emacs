@@ -8,9 +8,7 @@ This will let emacs switch between a high and low dpi mode, based on what monito
 Works per frame also, so a frame on a low dpi monitor will not be scaled, while one on a high dpi monitor will.
 
 * Bugs
-1) Used the window-configuration-change-hook, which is the best hook I could find, but still limited. 
-Just moving does not rescale, need to do something to trigger the window-configuration-change-hook, like maximizing
-2) Not everything seems to resize perfectly.
+1) Not everything seems to resize perfectly.
 
 
 
