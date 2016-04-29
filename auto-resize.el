@@ -14,7 +14,7 @@
   "A package to auto-resize emacs when moving between high/low dpi monitors"
   :group 'convenience
   :link '(url-link "https://github.com/MatthewBregg/auto-resize-emacs")
-  :version '1
+  :version '1.1
   )
 
 ;;How to set font : Sets font for the current fram, and only via height
@@ -34,7 +34,9 @@
 ;;Add dpi calculator also, so size, rather than raw res
 
 (defun auto-resize--get-current-monitor-resolution ()
-   (cdr (cdr (cdr (cadr (frame-monitor-attributes))))))
+  (let ((monitor (frame-monitor-attributes)))
+    (if (eq monitor nil) nil
+   (cdr (cdr (cdr (cadr monitor)))))))
 
 
 (defcustom auto-resize--ppi-turning-point 14200
@@ -50,15 +52,24 @@
 
 (defun auto-resize--get-current-monitor-area-in-inches ()
   (let ((dimensions (auto-resize--get-current-monitor-dimensions)))
-    (* (auto-resize--mmtoinches (car dimensions)) (auto-resize--mmtoinches (cadr dimensions)))))
+    (if (or (not (numberp (car dimensions))) (not (numberp (cadr dimensions) ))) nil
+    (* (auto-resize--mmtoinches (car dimensions)) (auto-resize--mmtoinches (cadr dimensions))))))
+
 
 
 (defun auto-resize--get-current-pixel-count ()
   (let ((resolution (auto-resize--get-current-monitor-resolution)))
-    (* (car resolution) (cadr resolution))))
+    (if (or (eq resolution nil) (not (numberp (car resolution))) (not (numberp (cadr resolution))))
+        nil
+      (* (car resolution) (cadr resolution))
+    )))
 
 (defun auto-resize--get-current-monitor-ppi ()
-  (/ (auto-resize--get-current-pixel-count) (auto-resize--get-current-monitor-area-in-inches) ))
+  (let ((pixel-count (auto-resize--get-current-pixel-count))
+        (area-in-inches (auto-resize--get-current-monitor-area-in-inches))
+        )
+    (if (or (numberp (numberp pixel-count)) (not (numberp area-in-inches))) nil
+       (/  pixel-count  area-in-inches))))
 
 (defvar auto-resize--last-saw-ppi 1000
   "The last ppi that was checked against")
@@ -78,9 +89,11 @@
 
 
 (defun auto-resize--resize-current-frame-if-new ()
+  (let ((current-monitor-ppi (auto-resize--get-current-monitor-ppi)))
+  (if (not (numberp current-monitor-ppi)) nil
   (when (display-graphic-p)
-    (if (= auto-resize--last-saw-ppi (auto-resize--get-current-monitor-ppi))  'didnt-resize (auto-resize--resize-frame)))
-  )
+    (if (= auto-resize--last-saw-ppi current-monitor-ppi)  'didnt-resize (auto-resize--resize-frame)))
+  )))
 
 (defun auto-resize--mmtoinches (x)
   (/ x 25.4))
@@ -104,5 +117,3 @@ Uses 'sleep-for' to wait, subject to same restrictions as that function.")
 (auto-resize-start-auto-resize-timer)	
 (provide 'auto-resize)
 ;;; auto-resize.el ends here
-
-
